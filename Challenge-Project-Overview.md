@@ -41,8 +41,8 @@ The CUAD-based contract triage pipeline is a high-value industrial use case with
 # Contract Review Challenge
 
 **Company / Org:** Accenture  
-**Challenge Advisor:** Adarsh Ravikumar, adarsh.ravikumar@accenture.com
-**AI Studio Coach:** Shweta Malabade, shweta.malabade@breakthroughtech.org
+**Challenge Advisor:** Adarsh Ravikumar, adarsh.ravikumar@accenture.com  \
+**AI Studio Coach:** Shweta Malabade, shweta.malabade@breakthroughtech.org  \
 **Program:** Break Through Tech AI Studio - Fall 2026  
 
 ---
