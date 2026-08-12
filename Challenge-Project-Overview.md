@@ -98,23 +98,26 @@ Use these milestones to guide your work. Your team will create a GitHub Projects
 ---
 
 ## 📚 Resources to Get Started
-
 The following resources will help your team understand the problem space and potential technical approaches for this project:
 
 **Background Reading:**
-- [e.g., Link to an article or blog post about the problem domain]
-- [e.g., Link to an industry report or case study]
+- [CUAD: An Expert-Annotated NLP Dataset for Legal Contract Review (Hendrycks et al., 2021)](https://arxiv.org/abs/2103.06268) — the original paper introducing the dataset. Covers what the 41 clause categories are, why transformer models struggle with this task, and how performance is shaped by model design and training data.
+- [Multi-label NLP: An Analysis of Class Imbalance and Loss Function Approaches (KDNuggets, 2023)](https://www.kdnuggets.com/2023/03/multilabel-nlp-analysis-class-imbalance-loss-function-approaches.html) — explains why multi-label classification becomes hard under imbalance and how loss functions like weighted BCE and Focal Loss address it. Directly relevant to the class imbalance problem in CUAD.
+- [AI Explainability in Contract Risk Scoring (Sirion, 2026)](https://www.sirion.ai/library/contract-insights/ai-explainability-tools-contracts/) — a practical explainer on how flagged clauses are traced back to their rationale to produce auditable decisions rather than black-box outputs. Useful context for framing the risk-scoring layer.
 
 **Technical Tutorials:**
-- [e.g., Link to a free tutorial on the ML technique(s) involved]
-- [e.g., Link to documentation for a key library or tool]
+- [Learn Hugging Face: Text Classification Tutorial](https://www.learnhuggingface.com/notebooks/hugging_face_text_classification_tutorial) — a hands-on, code-focused walkthrough for loading a pretrained DistilBERT model, fine-tuning it on a custom dataset, and evaluating results. Reusable patterns directly applicable to this project.
+- [HuggingFace Official Docs: Sequence Classification](https://huggingface.co/docs/transformers/tasks/sequence_classification) — the canonical reference for fine-tuning encoder models (DistilBERT, RoBERTa, DistilRoBERTa) using the `Trainer` API. Covers tokenization, `TrainingArguments`, `DataCollatorWithPadding`, and evaluation hooks.
+- [Spearman Rank Correlation Explained (Simplilearn)](https://www.simplilearn.com/tutorials/statistics-tutorial/spearmans-rank-correlation) — a clear introduction to Spearman's ρ as a non-parametric measure of ranking agreement. Relevant for evaluating whether the model's contract risk rankings match the advisor's hand-ranked examples.
 
 **Code Examples:**
-- [e.g., Link to a relevant GitHub repo]
-- [e.g., Link to a sample implementation or starter code]
+- [Official CUAD GitHub Repository (The Atticus Project)](https://github.com/TheAtticusProject/cuad) — contains the dataset, baseline model code, and evaluation scripts from the original paper. Good reference for understanding the intended evaluation setup before adapting it to a classification framing.
+- [CUAD on Hugging Face Datasets](https://huggingface.co/datasets/cuad) — loads the dataset directly via `datasets.load_dataset("cuad")`, bypassing manual JSON parsing and enabling easy integration with the HuggingFace `Trainer` pipeline. The fastest way to get data into a training loop.
+- [Hybrid NLP Framework for Contract Risk Assessment (IJSRS, 2025)](http://ijsrs.org/v2i11/1.php) — an implementation paper combining fine-tuned RoBERTa with a rule-based risk assessment layer, close in architecture to what this project is building. Includes a Streamlit interface and covers the explainability angle explicitly — useful as a reference design.
 
 **Other:**
-- [Links to any additional resources — e.g., papers, videos, podcasts, etc.]
+- [Stanford CS224N HuggingFace Transformers Tutorial (2026)](https://web.stanford.edu/class/cs224n/materials/hf_transformers_tutorial.pdf) — lecture slides from Stanford's NLP course covering the full HuggingFace ecosystem: tokenizers, AutoModel classes, the Trainer API, and fine-tuning on custom datasets. Good structured background before diving into project code.
+- [DistilRoBERTa Base Model Card (HuggingFace)](https://huggingface.co/distilroberta-base) — the recommended base model per the advisor's guidance. The model card explains its distillation from RoBERTa, speed/accuracy tradeoffs, and how to load it for sequence classification.
 
 *Feel free to explore beyond these, and share anything interesting you find with me!*
 
