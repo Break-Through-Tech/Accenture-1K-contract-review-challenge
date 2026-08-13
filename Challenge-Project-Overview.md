@@ -154,3 +154,47 @@ I’m excited to work with you!
 ## ❓ Questions?
 
 Please bring any questions to our first meeting during the week of August 24th (Break Through Tech’s Bridge to Studio - Session C). 
+
+## Data & Format
+
+- **Q: Should we use the CUAD JSON files (question-answer format) as-is, or reshape them into per-chunk classification format, since the milestone doc calls for "chunk-based multi-label classification"?**
+  - A: Reshape them. The JSON format is set up for a different task — finding answer spans — which isn't what we're building. You'll need to convert contracts into overlapping text chunks and label each one. It's a bit of upfront work in September but the right foundation for everything that follows.
+
+- **Q: Is the pre-made train/test split okay to reuse, or should the team build its own after reshaping?**
+  - A: Build your own. The existing split was designed for the original QA task and won't carry over cleanly. The main thing to get right is splitting by contract, not by chunk — if chunks from the same contract end up in both train and test, your evaluation numbers will look better than they actually are.
+
+---
+
+## Scoping the 41 Clause Categories
+
+- **Q: Which ~10 clause categories matter most to Accenture's actual legal/procurement teams? Can you help rank them?**
+  - A: From what I've seen in practice, the ones that come up most in reviews are: Limitation of Liability, Indemnification, Termination for Convenience, Governing Law, Auto-Renewal, IP Ownership Assignment, Change of Control, Non-Compete, Audit Rights, and Most Favored Nation. Liability and indemnification clauses are where the real exposure sits, so I'd prioritize getting those right before the others. That said, run your EDA first — if any of these have very few examples in the data, flag it and we can swap one out.
+
+---
+
+## Risk Scoring
+
+- **Q: What specific signals define "risky"? (e.g., missing liability cap, one-sided termination, vague language) Do you have a real checklist from experience?**
+  - A: The things that consistently raise flags in real reviews: a liability clause with no monetary cap, termination rights that only run one way, indemnification that's completely open-ended, auto-renewal with no notice window, and IP assignment language that's ambiguous about who owns what. Vague language on its own is harder to score consistently, so I'd keep the signals concrete for now and revisit once the core model is working.
+
+- **Q: Can you hand-rank a small batch (20-30) of clauses as a reference the team can compare against?**
+  - A: Yes, happy to do that. Put together a spreadsheet with 20–30 clause excerpts pulled from the test set and I'll go through and score them. A simple 1–5 scale works fine. Give me a couple weeks once you have the data prepped.
+
+- **Q: What does Low/Medium/High mean in practice at Accenture — existing rubric, or do we define it from scratch?**
+  - A: We don't have a formal rubric for this, so define it from scratch and I'll react to it. My rough instinct: Low is a standard clause with no red flags, Medium is something that warrants a closer look but isn't a dealbreaker, and High is either a missing clause that should be there or language that creates real financial or legal exposure. Run your proposed thresholds by me before you lock them in for November.
+
+- **Q: Should a missing clause (one that should exist but doesn't) count as a risk signal on its own?**
+  - A: Yes, absolutely. A contract that's silent on liability or IP ownership isn't neutral — it usually defaults to the worse position for whoever didn't catch it. Treat absence as at least a Medium for any of the high-priority categories.
+
+- **Q: Should the risk signals be weighted equally, or do some matter more?**
+  - A: Some matter more. I'd treat an uncapped liability or a completely missing indemnification clause as automatically High, regardless of what else looks fine. Equal weighting is a reasonable starting point to get the system running, but build it so weights can be adjusted — we'll want to tune that in November once we can see how the scores are landing.
+
+---
+
+## Modeling / Implementation
+
+- **Q: Is Google Colab free tier sufficient, or should the team have Colab Pro / paid compute access?**
+  - A: Free tier will probably cause headaches — sessions disconnect and training runs that take a few hours aren't realistic on it. Colab Pro is worth it at $10/month, or the team can use Kaggle Notebooks for free, which gives 30 GPU hours a week with more stable sessions. I'd sort this out before October when the actual fine-tuning starts.
+
+- **Q: How should long contracts be chunked — paragraph-based, sentence-based, fixed token length, or team's discretion?**
+  - A: Fixed token length with some overlap is the way to go — 512 tokens with roughly a 64-token overlap is standard and will work well here. Paragraph-based sounds intuitive but legal paragraphs are all over the place in length, so it gets messy fast. Stick with the fixed window approach and document what you chose so it's reproducible.
