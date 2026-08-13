@@ -54,7 +54,7 @@ Accenture is a leading global professional services company that provides a broa
 
 ## 🎯 The Challenge
 ### Project Summary
-In this project, you will use real-world commercial contracts from the CUAD dataset (510 contracts, 41 expert-annotated clause categories) and NLP techniques including chunk-based multi-label classification with fine-tuned transformer encoders, paired with an explainable rule-based risk-scoring layer, to build a pipeline that automatically detects key clauses, flags them as Low/Medium/High risk, and rolls these up into a contract-level triage score. This will help our company address the bottleneck legal and procurement teams face when manually reviewing tens of thousands of contracts a year to find the small number of clauses that carry meaningful risk, enabling reviewers to prioritize which contracts to open first.
+In this project, you will use real-world commercial contracts from the CUAD dataset (510 contracts, 41 expert-annotated clause categories) and NLP techniques including chunk-based multi-label classification with fine-tuned transformer encoders, paired with an explainable rule-based risk-scoring layer, to build a pipeline that automatically detects key clauses, flags them as Low/Medium/High risk, and rolls these up into a contract-level triage score. The team will fine-tune a pre-trained lightweight transformer encoder (e.g., DistilRoBERTa) rather than training a model from scratch, and will focus initial clause detection on the 10 most impactful clause categories, with full coverage of all 41 CUAD categories as a stretch goal. This will help our company address the bottleneck legal and procurement teams face when manually reviewing tens of thousands of contracts a year to find the small number of clauses that carry meaningful risk, enabling reviewers to prioritize which contracts to open first.
 
 ### Success Criteria
 Success has two tracks:
@@ -87,12 +87,28 @@ Use these milestones to guide your work. Your team will create a GitHub Projects
 ### Key Details
 - Real-world commercial contracts from the CUAD dataset (510 contracts, 41 expert-annotated clause categories), raw text/PDF available.
 - Teams must implement strict preprocessing rules to handle document length variance and ensure text cleaning captures the necessary legal terminology for high-accuracy classification.
+- Initial clause detection is scoped to the 10 categories below, with full coverage as a stretch goal.
+
+### Focus Categories
+| Category | Contracts (of 510) | Share |
+|---|---|---|
+| Governing Law | 437 | 85.7% |
+| Anti-Assignment | 374 | 73.3% |
+| Cap On Liability | 275 | 53.9% |
+| License Grant | 255 | 50.0% |
+| Audit Rights | 214 | 42.0% |
+| Termination For Convenience | 183 | 35.9% |
+| Exclusivity | 180 | 35.3% |
+| Change Of Control | 121 | 23.7% |
+| Non-Compete | 119 | 23.3% |
+| Uncapped Liability | 111 | 21.8% |
 
 ---
 
 ## 🛠️ Suggested Approach
 **ML Problem Type:** NLP & Classification  
 **Recommended Libraries:** HuggingFace Transformers, PyTorch/TensorFlow, Scikit-learn, Pandas  
+**Modeling Approach:** Fine-tune a pre-trained lightweight transformer encoder (e.g., DistilRoBERTa) rather than training from scratch.  
 **Evaluation Metrics:** Precision, Recall, F1-Score for classification; Spearman Correlation for risk-ranking alignment.
 
 ---
